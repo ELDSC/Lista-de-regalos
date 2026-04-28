@@ -1,0 +1,124 @@
+<div class="page">
+
+  <!-- Fondo decorativo -->
+  <div class="bg-blobs">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <!-- Partículas flotantes -->
+  <div class="particles">
+    <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]"
+          class="particle" [class]="'p' + i">
+      {{ ['🌸','💕','⭐','🎀','🌷','✨','🍓','🎁','💖','🌺','🦋','🍡'][i - 1] }}
+    </span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="title-block">
+        <p class="subtitle">🎂 Lista de deseos</p>
+        <h1 class="title">Lista de Regalos</h1>
+        <p class="tagline">¡Elige algo especial! 💝</p>
+      </div>
+
+      <!-- Tab de perfiles -->
+      <div class="profile-tabs">
+        <button
+          class="tab"
+          [class.active]="activeProfile === 'josue'"
+          (click)="switchProfile('josue')">
+          <span class="tab-avatar">🎮</span>
+          <span>Josué</span>
+        </button>
+        <button
+          class="tab"
+          [class.active]="activeProfile === 'dafyanie'"
+          (click)="switchProfile('dafyanie')">
+          <span class="tab-avatar">🌸</span>
+          <span>Dafyanie</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido -->
+  <main class="content">
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="loading">
+      <span class="loading-dot"></span>
+      <span class="loading-dot"></span>
+      <span class="loading-dot"></span>
+    </div>
+
+    <!-- Secciones por rango -->
+    <ng-container *ngIf="!loading">
+      <section
+        *ngFor="let rank of ranks"
+        class="rank-section"
+        [class.hidden]="!hasProducts(rank)">
+
+        <!-- Encabezado del rango -->
+        <div class="rank-header">
+          <div class="rank-badge" [style.background]="rankMeta[rank].bg"
+               [style.color]="rankMeta[rank].color">
+            {{ rankMeta[rank].emoji }} {{ rank }}
+          </div>
+          <div class="rank-line"></div>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="products-grid">
+          <div class="product-card"
+               *ngFor="let product of byRank(rank)"
+               [class.purchased]="product.is_purchased">
+
+            <!-- Imagen -->
+            <div class="card-img-wrap">
+              <img [src]="product.image_url || 'assets/placeholder.png'"
+                   [alt]="product.title" class="card-img"/>
+              <div class="purchased-overlay" *ngIf="product.is_purchased">
+                <span>¡Ya fue<br>regalado! 🎉</span>
+              </div>
+              <div class="card-rank-pill"
+                   [style.background]="rankMeta[product.rank].bg"
+                   [style.color]="rankMeta[product.rank].color">
+                {{ product.rank }}
+              </div>
+            </div>
+
+            <!-- Info -->
+            <div class="card-body">
+              <h3 class="card-title">{{ product.title }}</h3>
+              <p class="card-desc">{{ product.description }}</p>
+              <div class="card-footer">
+                <span class="card-price">S/. {{ product.price | number:'1.2-2' }}</span>
+                <a [href]="product.purchase_url" target="_blank"
+                   class="card-btn"
+                   [class.disabled]="product.is_purchased">
+                  {{ product.is_purchased ? '✓ Regalado' : '🛒 Comprar' }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Empty state -->
+      <div class="empty-state" *ngIf="products.length === 0">
+        <p class="empty-emoji">🌷</p>
+        <p>Aún no hay regalos en esta lista</p>
+        <small>¡Pronto habrá cositas aquí!</small>
+      </div>
+    </ng-container>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Hecho con 💖 · {{ activeProfile === 'josue' ? 'Josué' : 'Dafyanie' }}</p>
+  </footer>
+
+</div>

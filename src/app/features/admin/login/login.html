@@ -1,0 +1,21 @@
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="emoji">🎂</div>
+    <h1>Panel Admin</h1>
+    <p class="sub">Solo para Josué 🤫</p>
+
+    <div class="field">
+      <input
+        type="password"
+        [(ngModel)]="password"
+        placeholder="Contraseña"
+        (keyup.enter)="submit()"
+        [class.shake]="error"
+      />
+    </div>
+
+    <p class="error-msg" *ngIf="error">Contraseña incorrecta 😿</p>
+
+    <button (click)="submit()">Entrar</button>
+  </div>
+</div>

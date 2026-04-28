@@ -1,0 +1,154 @@
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">🎁 Admin</div>
+    <p class="logo-sub">Lista de Regalos</p>
+    <nav>
+      <span class="nav-item active">📦 Productos</span>
+    </nav>
+    <button class="logout-btn" (click)="logout()">Salir 👋</button>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <h1>Productos</h1>
+      <button class="btn-primary" (click)="openCreate()">+ Nuevo producto</button>
+    </div>
+
+    <p class="success-msg" *ngIf="successMsg">{{ successMsg }}</p>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="loading">Cargando... 🌸</div>
+
+    <!-- Tabla de productos -->
+    <div class="table-wrap" *ngIf="!loading">
+      <table>
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Título</th>
+            <th>Rango</th>
+            <th>Precio</th>
+            <th>Para</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of products">
+            <td>
+              <img [src]="p.image_url || 'assets/placeholder.png'"
+                   class="thumb" alt="img"/>
+            </td>
+            <td>
+              <strong>{{ p.title }}</strong>
+              <br>
+              <small>{{ p.description }}</small>
+            </td>
+            <td>
+              <span class="rank-badge"
+                    [style.background]="rankColor(p.rank)">
+                {{ p.rank }}
+              </span>
+            </td>
+            <td>S/. {{ p.price }}</td>
+            <td>{{ p.profile_id === 'josue' ? 'Josué' : 'Dafyanie' }}</td>
+            <td class="actions">
+              <button class="btn-edit" (click)="openEdit(p)">✏️</button>
+              <button class="btn-del" (click)="deleteProduct(p.id!)">🗑️</button>
+            </td>
+          </tr>
+          <tr *ngIf="products.length === 0">
+            <td colspan="6" class="empty">No hay productos aún 🌷</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modal formulario -->
+  <div class="modal-overlay" *ngIf="showForm" (click)="closeForm()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editingId ? 'Editar producto' : 'Nuevo producto' }}</h2>
+        <button class="close-btn" (click)="closeForm()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Columna izquierda -->
+        <div class="form-left">
+          <label>Título *</label>
+          <input [(ngModel)]="form.title" placeholder="Ej: Audífonos Sony"/>
+
+          <label>Descripción</label>
+          <textarea [(ngModel)]="form.description" rows="3"
+                    placeholder="Breve descripción del regalo..."></textarea>
+
+          <label>URL de compra</label>
+          <input [(ngModel)]="form.purchase_url" placeholder="https://..."/>
+
+          <div class="row-2">
+            <div>
+              <label>Precio (S/.)</label>
+              <input type="number" [(ngModel)]="form.price" placeholder="0.00"/>
+            </div>
+            <div>
+              <label>Rango *</label>
+              <select [(ngModel)]="form.rank">
+                <option *ngFor="let r of ranks" [value]="r">{{ r }}</option>
+              </select>
+            </div>
+          </div>
+
+          <label>Para</label>
+          <div class="profile-toggle">
+            <button *ngFor="let p of profiles"
+                    [class.active]="form.profile_id === p.id"
+                    (click)="form.profile_id = p.id">
+              {{ p.label }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Columna derecha: imagen -->
+        <div class="form-right">
+          <label>Imagen</label>
+          <div class="drop-zone"
+               (dragover)="onDragOver($event)"
+               (drop)="onDrop($event)"
+               (click)="fileInput.click()">
+            <img *ngIf="previewUrl" [src]="previewUrl" class="preview"/>
+            <div *ngIf="!previewUrl" class="drop-placeholder">
+              <span>🖼️</span>
+              <p>Arrastra o haz clic</p>
+            </div>
+            <div *ngIf="imageUploading" class="uploading">Subiendo... 🌸</div>
+          </div>
+          <input #fileInput type="file" accept="image/*"
+                 style="display:none" (change)="onFileSelected($event)"/>
+
+          <!-- Preview card -->
+          <div class="preview-card" *ngIf="form.title">
+            <img [src]="previewUrl || 'assets/placeholder.png'" class="pc-img"/>
+            <div class="pc-info">
+              <span class="pc-rank" [style.background]="rankColor(form.rank)">
+                {{ form.rank }}
+              </span>
+              <p class="pc-title">{{ form.title }}</p>
+              <p class="pc-price">S/. {{ form.price }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeForm()">Cancelar</button>
+        <button class="btn-save" (click)="save()" [disabled]="saving || imageUploading">
+          {{ saving ? 'Guardando...' : (editingId ? 'Actualizar' : 'Crear producto') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
