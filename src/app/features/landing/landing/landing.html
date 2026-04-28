@@ -1,5 +1,4 @@
 <div class="page">
-
   <!-- Fondo decorativo -->
   <div class="bg-blobs">
     <div class="blob b1"></div>
@@ -9,9 +8,12 @@
 
   <!-- Partículas flotantes -->
   <div class="particles">
-    <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]"
-          class="particle" [class]="'p' + i">
-      {{ ['🌸','💕','⭐','🎀','🌷','✨','🍓','🎁','💖','🌺','🦋','🍡'][i - 1] }}
+    <span
+      *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+      class="particle"
+      [class]="'p' + i"
+    >
+      {{ ['🌸', '💕', '⭐', '🎀', '🌷', '✨', '🍓', '🎁', '💖', '🌺', '🦋', '🍡'][i - 1] }}
     </span>
   </div>
 
@@ -19,9 +21,9 @@
   <header class="header">
     <div class="header-inner">
       <div class="title-block">
-        <p class="subtitle">🎂 Lista de deseos</p>
+        <p class="subtitle">Lista de deseos</p>
         <h1 class="title">Lista de Regalos</h1>
-        <p class="tagline">¡Elige algo especial! 💝</p>
+        <p class="tagline">¡Elige con sabiduria, miau!</p>
       </div>
 
       <!-- Tab de perfiles -->
@@ -29,14 +31,16 @@
         <button
           class="tab"
           [class.active]="activeProfile === 'josue'"
-          (click)="switchProfile('josue')">
-          <span class="tab-avatar">🎮</span>
+          (click)="switchProfile('josue')"
+        >
+          <span class="tab-avatar">👨‍💻</span>
           <span>Josué</span>
         </button>
         <button
           class="tab"
           [class.active]="activeProfile === 'dafyanie'"
-          (click)="switchProfile('dafyanie')">
+          (click)="switchProfile('dafyanie')"
+        >
           <span class="tab-avatar">🌸</span>
           <span>Dafyanie</span>
         </button>
@@ -46,7 +50,6 @@
 
   <!-- Contenido -->
   <main class="content">
-
     <!-- Loading -->
     <div class="loading" *ngIf="loading">
       <span class="loading-dot"></span>
@@ -56,15 +59,14 @@
 
     <!-- Secciones por rango -->
     <ng-container *ngIf="!loading">
-      <section
-        *ngFor="let rank of ranks"
-        class="rank-section"
-        [class.hidden]="!hasProducts(rank)">
-
+      <section *ngFor="let rank of ranks" class="rank-section" [class.hidden]="!hasProducts(rank)">
         <!-- Encabezado del rango -->
         <div class="rank-header">
-          <div class="rank-badge" [style.background]="rankMeta[rank].bg"
-               [style.color]="rankMeta[rank].color">
+          <div
+            class="rank-badge"
+            [style.background]="rankMeta[rank].bg"
+            [style.color]="rankMeta[rank].color"
+          >
             {{ rankMeta[rank].emoji }} {{ rank }}
           </div>
           <div class="rank-line"></div>
@@ -72,20 +74,26 @@
 
         <!-- Grid de productos -->
         <div class="products-grid">
-          <div class="product-card"
-               *ngFor="let product of byRank(rank)"
-               [class.purchased]="product.is_purchased">
-
+          <div
+            class="product-card"
+            *ngFor="let product of byRank(rank)"
+            [class.purchased]="product.is_purchased"
+          >
             <!-- Imagen -->
             <div class="card-img-wrap">
-              <img [src]="product.image_url || 'assets/placeholder.png'"
-                   [alt]="product.title" class="card-img"/>
+              <img
+                [src]="product.image_url || 'assets/placeholder.png'"
+                [alt]="product.title"
+                class="card-img"
+              />
               <div class="purchased-overlay" *ngIf="product.is_purchased">
-                <span>¡Ya fue<br>regalado! 🎉</span>
+                <span>¡Ya fue<br />regalado! 🎉</span>
               </div>
-              <div class="card-rank-pill"
-                   [style.background]="rankMeta[product.rank].bg"
-                   [style.color]="rankMeta[product.rank].color">
+              <div
+                class="card-rank-pill"
+                [style.background]="rankMeta[product.rank].bg"
+                [style.color]="rankMeta[product.rank].color"
+              >
                 {{ product.rank }}
               </div>
             </div>
@@ -95,10 +103,13 @@
               <h3 class="card-title">{{ product.title }}</h3>
               <p class="card-desc">{{ product.description }}</p>
               <div class="card-footer">
-                <span class="card-price">S/. {{ product.price | number:'1.2-2' }}</span>
-                <a [href]="product.purchase_url" target="_blank"
-                   class="card-btn"
-                   [class.disabled]="product.is_purchased">
+                <span class="card-price">S/. {{ product.price | number: '1.2-2' }}</span>
+                <a
+                  [href]="product.purchase_url"
+                  target="_blank"
+                  class="card-btn"
+                  [class.disabled]="product.is_purchased"
+                >
                   {{ product.is_purchased ? '✓ Regalado' : '🛒 Comprar' }}
                 </a>
               </div>
@@ -118,7 +129,6 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p>Hecho con 💖 · {{ activeProfile === 'josue' ? 'Josué' : 'Dafyanie' }}</p>
+    <p>By DSC · {{ activeProfile === 'josue' ? 'Josué' : 'Dafyanie' }}</p>
   </footer>
-
 </div>
