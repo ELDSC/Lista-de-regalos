@@ -1,25 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap');
 
 // ── Variables ─────────────────────────────
-:root {
-  --pink:       #e91e63;
-  --pink-light: #f8bbd0;
-  --pink-pale:  #fce4ec;
-  --cream:      #fff9fb;
-  --text:       #3a2030;
-  --text-soft:  #9c6b7e;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
 .page {
+  // Default (Dafyanie)
+  --primary: #e91e63;
+  --primary-rgb: 233, 30, 99;
+  --primary-light: #f8bbd0;
+  --primary-pale: #fce4ec;
+  --bg-color: #fff9fb;
+  --text-main: #3a2030;
+  --text-muted: #9c6b7e;
+  --blob-1: #f48fb1;
+  --blob-2: #ce93d8;
+  --blob-3: #fff9c4;
+  --tab-active-grad: linear-gradient(135deg, #ec407a, #f06292);
+
+  &.theme-josue {
+    // Pastel Blue Theme
+    --primary: #42a5f5;
+    --primary-rgb: 66, 165, 245;
+    --primary-light: #bbdefb;
+    --primary-pale: #e3f2fd;
+    --bg-color: #f4f9fc;
+    --text-main: #1a2a3a;
+    --text-muted: #5c748c;
+    --blob-1: #90caf9;
+    --blob-2: #81d4fa;
+    --blob-3: #80cbc4;
+    --tab-active-grad: linear-gradient(135deg, #42a5f5, #64b5f6);
+  }
+
   min-height: 100vh;
-  background: var(--cream);
+  background: var(--bg-color);
   font-family: 'Nunito', sans-serif;
-  color: var(--text);
+  color: var(--text-main);
   position: relative;
   overflow-x: hidden;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 // ── Fondo decorativo ──────────────────────
 .bg-blobs {
@@ -36,19 +55,19 @@
 }
 .b1 {
   width: 500px; height: 500px;
-  background: #f48fb1;
+  background: var(--blob-1);
   top: -100px; left: -100px;
   animation: drift 12s ease-in-out infinite alternate;
 }
 .b2 {
   width: 400px; height: 400px;
-  background: #ce93d8;
+  background: var(--blob-2);
   top: 40%; right: -80px;
   animation: drift 16s ease-in-out infinite alternate-reverse;
 }
 .b3 {
   width: 300px; height: 300px;
-  background: #fff9c4;
+  background: var(--blob-3);
   bottom: -60px; left: 30%;
   animation: drift 10s ease-in-out infinite alternate;
 }
@@ -102,7 +121,7 @@
 }
 .subtitle {
   font-size: 14px;
-  color: var(--text-soft);
+  color: var(--text-muted);
   letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 700;
@@ -111,14 +130,14 @@
 .title {
   font-family: 'Pacifico', cursive;
   font-size: clamp(36px, 8vw, 64px);
-  color: var(--pink);
+  color: var(--primary);
   line-height: 1.1;
-  text-shadow: 3px 3px 0 #fce4ec;
+  text-shadow: 3px 3px 0 var(--primary-pale);
   margin-bottom: 10px;
 }
 .tagline {
   font-size: 16px;
-  color: var(--text-soft);
+  color: var(--text-muted);
   font-weight: 600;
 }
 
@@ -128,7 +147,7 @@
   background: white;
   border-radius: 20px;
   padding: 6px;
-  box-shadow: 0 4px 20px rgba(233, 30, 99, 0.12);
+  box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.12);
   gap: 4px;
   animation: slideDown 0.9s ease both;
 }
@@ -144,20 +163,20 @@
   font-weight: 700;
   cursor: pointer;
   background: transparent;
-  color: var(--text-soft);
+  color: var(--text-muted);
   transition: all 0.25s ease;
 
   .tab-avatar { font-size: 20px; }
 
   &.active {
-    background: linear-gradient(135deg, #ec407a, #f06292);
+    background: var(--tab-active-grad);
     color: white;
-    box-shadow: 0 4px 16px rgba(233, 30, 99, 0.3);
+    box-shadow: 0 4px 16px rgba(var(--primary-rgb), 0.3);
     transform: scale(1.03);
   }
   &:hover:not(.active) {
-    background: var(--pink-pale);
-    color: var(--pink);
+    background: var(--primary-pale);
+    color: var(--primary);
   }
 }
 
@@ -179,7 +198,7 @@
 }
 .loading-dot {
   width: 12px; height: 12px;
-  background: var(--pink);
+  background: var(--primary);
   border-radius: 50%;
   animation: bounce 1.2s ease-in-out infinite;
   &:nth-child(2) { animation-delay: 0.2s; }
@@ -219,7 +238,7 @@
 .rank-line {
   flex: 1;
   height: 2px;
-  background: linear-gradient(to right, var(--pink-light), transparent);
+  background: linear-gradient(to right, var(--primary-light), transparent);
   border-radius: 2px;
 }
 
@@ -235,13 +254,13 @@
   background: white;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(233,30,99,0.08);
+  box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   animation: fadeUp 0.5s ease both;
 
   &:hover {
     transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 12px 40px rgba(233,30,99,0.18);
+    box-shadow: 0 12px 40px rgba(var(--primary-rgb), 0.18);
   }
 
   &.purchased {
@@ -254,7 +273,7 @@
   position: relative;
   height: 180px;
   overflow: hidden;
-  background: var(--pink-pale);
+  background: var(--primary-pale);
 }
 .card-img {
   width: 100%;
@@ -268,7 +287,7 @@
 .purchased-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(233,30,99,0.75);
+  background: rgba(var(--primary-rgb), 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -301,11 +320,13 @@
 }
 .card-desc {
   font-size: 12px;
-  color: var(--text-soft);
+  color: var(--text-muted);
   line-height: 1.5;
+  min-height: 4.5em; /* 3 líneas exactas */
   margin-bottom: 14px;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -318,12 +339,12 @@
 .card-price {
   font-size: 15px;
   font-weight: 900;
-  color: var(--pink);
+  color: var(--primary);
 }
 .card-btn {
   display: inline-block;
   padding: 7px 14px;
-  background: linear-gradient(135deg, #ec407a, #f06292);
+  background: var(--tab-active-grad);
   color: white;
   border-radius: 12px;
   font-size: 12px;
@@ -334,7 +355,7 @@
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(233,30,99,0.35);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.35);
   }
   &.disabled {
     background: #ccc;
@@ -346,7 +367,7 @@
 .empty-state {
   text-align: center;
   padding: 80px 20px;
-  color: var(--text-soft);
+  color: var(--text-muted);
 
   .empty-emoji { font-size: 64px; margin-bottom: 16px; }
   p { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
@@ -359,7 +380,7 @@
   z-index: 10;
   text-align: center;
   padding: 24px;
-  color: var(--text-soft);
+  color: var(--text-muted);
   font-size: 13px;
   font-weight: 600;
 }

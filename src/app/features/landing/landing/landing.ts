@@ -18,9 +18,15 @@ export class LandingComponent implements OnInit {
 
   ranks: Rank[] = ['S+', 'S', 'A', 'B', 'C', 'D'];
 
+  get currentEmojis(): string[] {
+    return this.activeProfile === 'josue'
+      ? ['🐈', '👨‍💻', '📱', '💾', '🎮', '🔫', '🎁', '💖', '🕹️', '🍔', '🧸', '💻'] 
+      : ['🌸', '💕', '⭐', '🎀', '🌷', '✨', '🍓', '🎁', '💖', '🌺', '🦋', '🍡'];
+  }
+
   rankMeta: Record<Rank, { label: string; color: string; bg: string; emoji: string }> = {
-    'S+': { label: 'S+', color: '#fff',    bg: '#e91e63', emoji: '👑' },
-    'S':  { label: 'S',  color: '#fff',    bg: '#f06292', emoji: '✨' },
+    'S+': { label: 'S+', color: '#fff',    bg: 'var(--primary)', emoji: '👑' },
+    'S':  { label: 'S',  color: '#fff',    bg: 'var(--primary-light)', emoji: '✨' },
     'A':  { label: 'A',  color: '#7b3f00', bg: '#ffd89b', emoji: '🌟' },
     'B':  { label: 'B',  color: '#00574b', bg: '#a8edea', emoji: '💎' },
     'C':  { label: 'C',  color: '#3a3a5c', bg: '#c5cae9', emoji: '🎀' },

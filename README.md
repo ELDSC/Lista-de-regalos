@@ -17,11 +17,11 @@ Una aplicación web moderna y profesional diseñada para gestionar y visualizar 
 
 ## ✨ Características Destacadas
 
-- **Perfiles Duales:** El sistema divide la vista entre perfiles de usuario (ej. *Josué* y *Dafyanie*), permitiendo cambiar de lista con una interfaz amigable.
+- **Perfiles Duales y Temas Dinámicos:** El sistema divide la vista entre perfiles de usuario (ej. *Josué* y *Dafyanie*). Cambiar de perfil no solo carga regalos diferentes, sino que inyecta variables CSS dinámicas que transforman toda la paleta de colores (Azul Pastel para Josué, Rosado para Dafyanie) y actualiza las partículas de emojis animadas en el fondo.
 - **Sistema de Rangos (Tiers):** Clasificación visual de regalos por niveles de prioridad (S+, S, A, B, C, D) aplicando una paleta de colores y emojis únicos para cada nivel.
-- **Panel de Administración Seguro:** Interfaz protegida mediante Angular Guards (`authGuard`) para garantizar el acceso exclusivo.
-- **Gestión de Contenido (CRUD):** Capacidad para crear, editar y eliminar productos en tiempo real.
-- **Subida de Archivos Integrada:** Soporte *Drag & Drop* y selector de archivos para subir imágenes directamente a la nube (Supabase).
+- **Panel de Administración Seguro & Responsivo:** Interfaz protegida mediante Angular Guards (`authGuard`). Recientemente rediseñada con Media Queries para ser 100% responsiva y utilizable desde dispositivos móviles.
+- **Gestión de Contenido (CRUD):** Capacidad para crear, editar y eliminar productos en tiempo real con una **vista previa fidedigna (Live Preview)** idéntica a la tarjeta final del producto en la landing page (incluyendo manejo de textos largos con CSS `line-clamp`).
+- **Subida de Archivos Integrada:** Soporte *Drag & Drop* inteligente que optimiza el espacio de la interfaz una vez que se carga la imagen para subir a la nube (Supabase).
 
 ---
 

@@ -115,13 +115,13 @@
         <div class="form-right">
           <label>Imagen</label>
           <div class="drop-zone"
+               [class.has-image]="!!previewUrl"
                (dragover)="onDragOver($event)"
                (drop)="onDrop($event)"
                (click)="fileInput.click()">
-            <img *ngIf="previewUrl" [src]="previewUrl" class="preview"/>
-            <div *ngIf="!previewUrl" class="drop-placeholder">
+            <div class="drop-placeholder">
               <span>🖼️</span>
-              <p>Arrastra o haz clic</p>
+              <p>{{ previewUrl ? 'Haz clic para cambiar imagen' : 'Arrastra o haz clic' }}</p>
             </div>
             <div *ngIf="imageUploading" class="uploading">Subiendo... 🌸</div>
           </div>
@@ -129,14 +129,15 @@
                  style="display:none" (change)="onFileSelected($event)"/>
 
           <!-- Preview card -->
-          <div class="preview-card" *ngIf="form.title">
+          <div class="preview-card" *ngIf="form.title || previewUrl">
             <img [src]="previewUrl || 'assets/placeholder.png'" class="pc-img"/>
             <div class="pc-info">
               <span class="pc-rank" [style.background]="rankColor(form.rank)">
                 {{ form.rank }}
               </span>
-              <p class="pc-title">{{ form.title }}</p>
-              <p class="pc-price">S/. {{ form.price }}</p>
+              <p class="pc-title">{{ form.title || 'Título' }}</p>
+              <p class="pc-desc">{{ form.description || 'Descripción del producto...' }}</p>
+              <p class="pc-price">S/. {{ form.price || '0.00' }}</p>
             </div>
           </div>
         </div>

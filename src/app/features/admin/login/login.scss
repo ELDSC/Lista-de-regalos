@@ -75,3 +75,11 @@
   25% { transform: translateX(-8px); }
   75% { transform: translateX(8px); }
 }
+
+// ── Mobile Responsive ──────────────────────
+@media (max-width: 480px) {
+  .login-card {
+    margin: 20px;
+    padding: 32px 24px;
+  }
+}
