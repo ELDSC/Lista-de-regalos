@@ -59,7 +59,11 @@
 
     <!-- Secciones por rango -->
     <ng-container *ngIf="!loading">
-      <section *ngFor="let rank of ranks" class="rank-section" [class.hidden]="!hasProducts(rank)">
+      <section
+        *ngFor="let rank of ranks"
+        class="rank-section"
+        [class.hidden]="!hasProducts(rank)"
+      >
         <!-- Encabezado del rango -->
         <div class="rank-header">
           <div
