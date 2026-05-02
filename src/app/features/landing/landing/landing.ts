@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsService, Product } from '../../../core/services/products';
 
-type Rank = 'D' | 'C' | 'B' | 'A' | 'S' | 'S+';
+type Rank = 'S+' | 'S' | 'A' | 'B' | 'C' | 'D';
 
 @Component({
   selector: 'app-landing',
@@ -16,7 +16,7 @@ export class LandingComponent implements OnInit {
   products: Product[] = [];
   loading = true;
 
-  ranks: Rank[] = ['D', 'C', 'B', 'A', 'S', 'S+'];
+  ranks: Rank[] = ['S+', 'S', 'A', 'B', 'C', 'D'];
 
   get currentEmojis(): string[] {
     return this.activeProfile === 'josue'
