@@ -80,7 +80,8 @@
         <div class="products-grid">
           <div
             class="product-card"
-            *ngFor="let product of byRank(rank)"
+            *ngFor="let product of byRank(rank); let i = index"
+            [style.animation-delay]="i * 0.06 + 's'"
             [class.purchased]="product.is_purchased"
           >
             <!-- Imagen -->

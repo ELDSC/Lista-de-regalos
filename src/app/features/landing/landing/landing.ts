@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsService, Product } from '../../../core/services/products';
 
@@ -11,12 +11,14 @@ type Rank = 'S+' | 'S' | 'A' | 'B' | 'C' | 'D';
   templateUrl: './landing.html',
   styleUrls: ['./landing.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, AfterViewInit {
   activeProfile: 'josue' | 'dafyanie' = 'josue';
   products: Product[] = [];
   loading = true;
 
   ranks: Rank[] = ['S+', 'S', 'A', 'B', 'C', 'D'];
+
+  private observer: IntersectionObserver | null = null;
 
   get currentEmojis(): string[] {
     return this.activeProfile === 'josue'
@@ -35,10 +37,17 @@ export class LandingComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private el: ElementRef
   ) {}
 
   ngOnInit() { this.loadProducts(); }
+
+  ngAfterViewInit() {
+    if (typeof IntersectionObserver !== 'undefined') {
+      this.setupObserver();
+    }
+  }
 
   async loadProducts() {
     this.loading = true;
@@ -46,11 +55,31 @@ export class LandingComponent implements OnInit {
     this.products = await this.productsService.getByProfile(this.activeProfile);
     this.loading = false;
     this.cdr.detectChanges();
+    setTimeout(() => this.setupObserver(), 100);
   }
 
   switchProfile(profile: 'josue' | 'dafyanie') {
     this.activeProfile = profile;
     this.loadProducts();
+  }
+
+  setupObserver() {
+    this.observer?.disconnect();
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            this.observer?.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+    );
+
+    const cards = this.el.nativeElement.querySelectorAll('.product-card:not(.visible)');
+    cards.forEach((card: Element) => this.observer?.observe(card));
   }
 
   byRank(rank: Rank): Product[] {
