@@ -212,16 +212,17 @@
 .modal-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 24px 32px;
   padding: 24px 28px;
+  align-items: start;
+  min-height: 0;
 
   label {
     display: block;
     font-size: 13px;
     font-weight: 600;
     color: #c2185b;
-    margin: 0 0 6px;
-    margin-top: 14px;
+    margin: 14px 0 6px;
     &:first-child { margin-top: 0; }
   }
 
@@ -237,6 +238,10 @@
   }
 
   textarea { resize: vertical; }
+}
+
+.form-left, .form-right {
+  min-width: 0;
 }
 
 .row-2 {
@@ -430,6 +435,7 @@
   .modal-body {
     grid-template-columns: 1fr;
     padding: 16px;
+    gap: 16px;
   }
 
   .modal-header {

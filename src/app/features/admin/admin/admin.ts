@@ -84,19 +84,22 @@ export class AdminComponent implements OnInit {
     const file = input.files?.[0];
     if (!file) return;
 
-    // Preview local inmediato
     const reader = new FileReader();
-    reader.onload = e => this.previewUrl = e.target?.result as string;
+    reader.onload = e => {
+      this.previewUrl = e.target?.result as string;
+      this.cdr.detectChanges();
+    };
     reader.readAsDataURL(file);
 
-    // Subir a Supabase Storage
     this.imageUploading = true;
+    this.cdr.detectChanges();
     try {
       this.form.image_url = await this.productsService.uploadImage(file);
     } catch (e) {
       console.error(e);
     }
     this.imageUploading = false;
+    this.cdr.detectChanges();
   }
 
   onDragOver(e: DragEvent) { e.preventDefault(); }
@@ -119,13 +122,18 @@ export class AdminComponent implements OnInit {
         await this.productsService.create(this.form);
       }
       this.successMsg = this.editingId ? '¡Producto actualizado! ✨' : '¡Producto creado! 🎉';
-      setTimeout(() => this.successMsg = '', 3000);
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.successMsg = '';
+        this.cdr.detectChanges();
+      }, 3000);
       this.closeForm();
       await this.loadProducts();
     } catch (e) {
       console.error(e);
     }
     this.saving = false;
+    this.cdr.detectChanges();
   }
 
   async deleteProduct(id: string) {
